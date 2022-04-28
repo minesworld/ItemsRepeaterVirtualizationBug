@@ -7,5 +7,15 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <local:VirtualizationBugPage1 />
+    <NavigationView x:Name="Navigator" 
+            PaneDisplayMode="Top"
+            BackRequested="NavigationBackRequested" 
+            ItemInvoked="NavigationItemInvoked"
+            IsSettingsVisible="False">
+        <NavigationView.MenuItems>
+            <NavigationViewItem  Content="BugPage1" Tag="ItemsRepeaterVirtualizationBug.VirtualizationBugPage1" />
+            <NavigationViewItem Content="BugPage2" Tag="ItemsRepeaterVirtualizationBug.VirtualizationBugPage2" />
+        </NavigationView.MenuItems>
+        <Frame x:Name="ContentFrame" Padding="0,8,0,0"/>
+    </NavigationView>
 </Window>

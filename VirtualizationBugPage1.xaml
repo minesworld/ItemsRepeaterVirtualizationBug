@@ -37,7 +37,6 @@
         </DataTemplate>
     </Page.Resources>
 
-
     <Grid Margin="4,0,0,0">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -52,7 +51,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        
+
         <StackPanel Grid.Row="0" Orientation="Horizontal">
             <TextBlock FontWeight="Bold" Text="Items List" />
             <Button Margin="4,0,4,0" Content="Previous" Click="PreviousButtonClick"/>

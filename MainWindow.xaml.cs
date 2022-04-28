@@ -18,14 +18,40 @@ using Windows.Foundation.Collections;
 
 namespace ItemsRepeaterVirtualizationBug
 {
-    /// <summary>
-    /// An empty window that can be used on its own or navigated to within a Frame.
-    /// </summary>
     public sealed partial class MainWindow : Window
     {
         public MainWindow()
         {
             this.InitializeComponent();
+
+            var menuItem = Navigator.MenuItems.OfType<NavigationViewItem>().First();
+            Navigator.SelectedItem = menuItem;
+            Type newPage = Type.GetType(menuItem.Tag.ToString());
+            ContentFrame.Navigate(
+                       newPage,
+                       null,
+                       new Microsoft.UI.Xaml.Media.Animation.EntranceNavigationTransitionInfo()
+                       );
         }
+
+        private void NavigationItemInvoked(NavigationView sender,
+                        NavigationViewItemInvokedEventArgs args)
+        {
+            if (args.InvokedItemContainer != null && (args.InvokedItemContainer.Tag != null))
+            {
+                Type newPage = Type.GetType(args.InvokedItemContainer.Tag.ToString());
+                ContentFrame.Navigate(
+                       newPage,
+                       null,
+                       args.RecommendedNavigationTransitionInfo
+                       );
+            }
+        }
+
+        private void NavigationBackRequested(NavigationView sender, NavigationViewBackRequestedEventArgs args)
+        {
+            if (ContentFrame.CanGoBack) ContentFrame.GoBack();
+        }
+
     }
 }

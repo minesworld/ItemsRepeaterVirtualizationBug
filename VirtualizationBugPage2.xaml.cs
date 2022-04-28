@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using ItemsRepeaterVirtualizationBug.FromCommunityToolkit;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -25,57 +26,47 @@ namespace ItemsRepeaterVirtualizationBug
     public sealed partial class VirtualizationBugPage2 : Page
     {
         [ObservableProperty]
-        private ObservableCollection<ValueObject> _valueObjects = new();
+        private Logger _wrapLayoutLogger;
 
-        public int ValueObjectsListIndex = 0;
-        public List<List<ValueObject>> ValueObjectsLists { get; } = new();
+        public ObservableCollection<ItemsList> ItemsListList { get; } = new();
+
+
+        /* we have to wrap the selected ItemsList into a List so that the ListView can display it... */
+        private ItemsList _selectedItemsList;
+        public ItemsList SelectedItemsList
+        {
+            get => _selectedItemsList;
+            set
+            {
+                if (SetProperty(ref _selectedItemsList, value) == false) return;
+
+                ListOfOneItemsList.Clear();
+                if (value != null) ListOfOneItemsList.Add(value);
+            }
+        }
+
+        public ObservableCollection<ItemsList> ListOfOneItemsList = new();
+
 
         public VirtualizationBugPage2()
         {
+            WrapLayoutLogger = FromCommunityToolkit.WrapLayout.Logger;
+
             this.InitializeComponent();
 
-            // create example data
+            // create some random example data
+            Random rndGen = new();
 
-            for (int i = 0; i < 20; i++)
+            for (int i = 1; i <= 20; i++) // always 20 Lists of Items
             {
-                int objectCount = 5;
-                List<ValueObject> valueObjects = new(objectCount);
-                for (int j = 0; j < objectCount; j++)
-                {
-                    valueObjects.Add(new ValueObject(string.Format("{0} {1}", i, j)));
-                }
+                int itemsCount = rndGen.Next(9) + 1; // up to 10 Item per List
 
-                ValueObjectsLists.Add(valueObjects);
-            }
+                var items = Item.CreateItems(i * 100, i * 100 + itemsCount, rndGen.Next(9) + 1); // up to 10 Numbers per Item
 
-            // show data
-            foreach (var valueObject in ValueObjectsLists[ValueObjectsListIndex])
-            {
-                ValueObjects.Add(valueObject);
+                var itemsList = new ItemsList(i.ToString(), items, WrapLayout.Logger);
+
+                ItemsListList.Add(itemsList);
             }
         }
-
-        private void PreviousButtonClick(object sender, RoutedEventArgs e)
-        {
-            if (ValueObjectsListIndex == 0) return;
-
-            ValueObjects.Clear();
-            foreach (var valueObject in ValueObjectsLists[--ValueObjectsListIndex])
-            {
-                ValueObjects.Add(valueObject);
-            }
-        }
-
-        private void NextButtonClick(object sender, RoutedEventArgs e)
-        {
-            if (ValueObjectsListIndex == ValueObjectsLists.Count - 1) return;
-
-            ValueObjects.Clear();
-            foreach (var valueObject in ValueObjectsLists[++ValueObjectsListIndex])
-            {
-                ValueObjects.Add(valueObject);
-            }
-        }
-
     }
 }

@@ -12,7 +12,6 @@
     <EnablePreviewMsixTooling>true</EnablePreviewMsixTooling>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Remove="VirtualizationBugPage2.xaml.cs" />
     <Compile Remove="VirtualizationBugPage3.xaml.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -22,7 +21,6 @@
     <None Remove="VirtualizationBugPage3.xaml" />
   </ItemGroup>
   <ItemGroup>
-    <Page Remove="VirtualizationBugPage2.xaml" />
     <Page Remove="VirtualizationBugPage3.xaml" />
   </ItemGroup>
 
@@ -57,6 +55,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="FromCommunityToolkit\" />
+    <Folder Include="Screenshots\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="VirtualizationBugPage2.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="ItemControl.xaml">

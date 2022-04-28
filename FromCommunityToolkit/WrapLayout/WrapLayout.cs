@@ -20,7 +20,7 @@ namespace ItemsRepeaterVirtualizationBug.FromCommunityToolkit
     /// </summary>
     public class WrapLayout : VirtualizingLayout
     {
-        #region minesworld support
+        #region minesworld debugging support and fixes
         /* minesworld */
         static public Logger Logger = new(true);
         static public bool RecycleOnReset;
