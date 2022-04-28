@@ -9,7 +9,7 @@ namespace ItemsRepeaterVirtualizationBug
 {
     public partial class Item : ObservableObject
     {
-        private int Number { get; set; }
+        public int Number { get; set; }
         private int LinesCount { get; set; }
 
         [ObservableProperty]

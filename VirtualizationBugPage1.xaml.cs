@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using ItemsRepeaterVirtualizationBug.FromCommunityToolkit;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -23,6 +24,15 @@ namespace ItemsRepeaterVirtualizationBug
     [INotifyPropertyChanged]
     public sealed partial class VirtualizationBugPage1 : Page
     {
+        public bool RecycleOnReset { 
+            get => WrapLayout.RecycleOnReset;
+            set => SetProperty(ref WrapLayout.RecycleOnReset, value);
+        }
+
+
+        [ObservableProperty]
+        private Logger _wrapLayoutLogger;
+
         [ObservableProperty]
         private List<Item> _items;
 
@@ -31,8 +41,10 @@ namespace ItemsRepeaterVirtualizationBug
 
         public VirtualizationBugPage1()
         {
-            this.InitializeComponent();
+            WrapLayoutLogger = FromCommunityToolkit.WrapLayout.Logger;
 
+            this.InitializeComponent();
+ 
             // create some random example data
             Random rndGen = new();
 
@@ -54,6 +66,8 @@ namespace ItemsRepeaterVirtualizationBug
         {
             if (ItemsListsIndex == 0) return;
 
+            WrapLayoutLogger.WriteLine("** PreviousButtonClick **");
+
             // Items is an ObservableProperty, so everthing should be fine...
             Items = ItemsLists[--ItemsListsIndex];
         }
@@ -62,9 +76,10 @@ namespace ItemsRepeaterVirtualizationBug
         {
             if (ItemsListsIndex == ItemsLists.Count - 1) return;
 
+            WrapLayoutLogger.WriteLine("** NextButtonClick **");
+
             // Items is an ObservableProperty, so everthing should be fine...
             Items = ItemsLists[++ItemsListsIndex];
         }
-
     }
 }

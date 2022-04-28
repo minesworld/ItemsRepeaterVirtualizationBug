@@ -16,6 +16,7 @@
     <Compile Remove="VirtualizationBugPage3.xaml.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Remove="ItemControl.xaml" />
     <None Remove="VirtualizationBugPage1.xaml" />
     <None Remove="VirtualizationBugPage2.xaml" />
     <None Remove="VirtualizationBugPage3.xaml" />
@@ -38,8 +39,8 @@
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="7.1.2" />
     <PackageReference Include="CommunityToolkit.WinUI.UI.Controls.Primitives" Version="7.1.2" />
-    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.0.0" />
-    <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22000.194" />
+    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.0.3" />
+    <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22000.197" />
     <Manifest Include="$(ApplicationManifest)" />
   </ItemGroup>
 
@@ -51,6 +52,14 @@
   </ItemGroup>
   <ItemGroup>
     <Page Update="VirtualizationBugPage1.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="FromCommunityToolkit\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="ItemControl.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
